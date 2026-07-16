@@ -1,0 +1,58 @@
+// Schema da Fase 2 — fonte de verdade dos projetos exibidos no site e do
+// único usuário administrador. Ver README.md para o contexto completo da
+// migração de content/projects.ts para este banco.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProjectStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model Project {
+  id              String        @id @default(cuid())
+  slug            String        @unique
+  title           String
+  tagline         String
+  description     String
+  longDescription String?
+  stack           String[]      @default([])
+  githubUrl       String?
+  demoUrl         String?
+  coverImage      String?
+  order           Int           @default(0)
+  status          ProjectStatus @default(DRAFT)
+  featured        Boolean       @default(false)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([status, order])
+}
+
+/// Único usuário administrador. Criado via prisma/seed.ts a partir de
+/// variáveis de ambiente — não há formulário público de cadastro.
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+/// Registro de tentativas de login usado para rate limiting básico,
+/// sem depender de um serviço externo como Upstash (ver README).
+model LoginAttempt {
+  id         String   @id @default(cuid())
+  identifier String
+  success    Boolean
+  createdAt  DateTime @default(now())
+
+  @@index([identifier, createdAt])
+}
