@@ -1,5 +1,6 @@
 import nextDynamic from "next/dynamic";
 import { Hero } from "@/components/sections/Hero/Hero";
+import { HashScroll } from "@/components/layout/HashScroll";
 
 // A seção de Projetos busca dados publicados direto do banco a cada
 // request — isso força renderização dinâmica, então uma edição no /admin
@@ -23,6 +24,7 @@ const Contact = nextDynamic(() =>
 export default function Home() {
   return (
     <>
+      <HashScroll />
       <Hero />
       <About />
       <Experience />

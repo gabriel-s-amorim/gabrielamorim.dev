@@ -34,3 +34,19 @@ export async function getPublishedProjects(): Promise<Project[]> {
 
   return projects.map(toPublicProject);
 }
+
+export async function getPublishedProjectBySlug(slug: string): Promise<Project | null> {
+  const project = await db.project.findFirst({
+    where: { slug, status: "PUBLISHED" },
+  });
+  return project ? toPublicProject(project) : null;
+}
+
+export async function getPublishedProjectSlugs(): Promise<string[]> {
+  const projects = await db.project.findMany({
+    where: { status: "PUBLISHED" },
+    select: { slug: true },
+    orderBy: { order: "asc" },
+  });
+  return projects.map((project) => project.slug);
+}

@@ -1,26 +1,89 @@
 import type { Project } from "@/types/content";
 
+export type GalleryItem = {
+  src: string;
+  label: string;
+  kind: "image" | "video";
+};
+
 /**
- * Galerias de screenshot por slug — alimentam o carrossel interno dos cards.
- * Arquivos vivem em public/projects/<slug>/gallery/.
+ * Galerias por slug — cards + página do projeto.
+ * Arquivos em public/projects/<slug>/.
  */
-export const projectGalleries: Record<string, string[]> = {
+export const projectGalleries: Record<string, GalleryItem[]> = {
   "nativa-store": [
-    "/projects/nativa-store/gallery/01-home.png",
-    "/projects/nativa-store/gallery/02-produto.png",
-    "/projects/nativa-store/gallery/03-carrinho.png",
-    "/projects/nativa-store/gallery/04-checkout.png",
-    "/projects/nativa-store/gallery/06-admin-dashboard.png",
+    {
+      src: "/projects/nativa-store/demo.mp4",
+      label: "Demo",
+      kind: "video",
+    },
+    {
+      src: "/projects/nativa-store/gallery/01-home.png",
+      label: "Home",
+      kind: "image",
+    },
+    {
+      src: "/projects/nativa-store/gallery/02-produto.png",
+      label: "Produto",
+      kind: "image",
+    },
+    {
+      src: "/projects/nativa-store/gallery/03-carrinho.png",
+      label: "Carrinho",
+      kind: "image",
+    },
+    {
+      src: "/projects/nativa-store/gallery/04-checkout.png",
+      label: "Checkout",
+      kind: "image",
+    },
+    {
+      src: "/projects/nativa-store/gallery/06-admin-dashboard.png",
+      label: "Admin",
+      kind: "image",
+    },
   ],
   devlevel: [
-    "/projects/devlevel/gallery/01-landing.png",
-    "/projects/devlevel/gallery/03-dashboard.png",
-    "/projects/devlevel/gallery/04-dashboard-charts.png",
-    "/projects/devlevel/gallery/05-entries.png",
-    "/projects/devlevel/gallery/07-reflection.png",
+    {
+      src: "/projects/devlevel/demo.mp4",
+      label: "Demo",
+      kind: "video",
+    },
+    {
+      src: "/projects/devlevel/gallery/01-landing.png",
+      label: "Landing",
+      kind: "image",
+    },
+    {
+      src: "/projects/devlevel/gallery/03-dashboard.png",
+      label: "Dashboard",
+      kind: "image",
+    },
+    {
+      src: "/projects/devlevel/gallery/04-dashboard-charts.png",
+      label: "Gráficos",
+      kind: "image",
+    },
+    {
+      src: "/projects/devlevel/gallery/05-entries.png",
+      label: "Entradas",
+      kind: "image",
+    },
+    {
+      src: "/projects/devlevel/gallery/07-reflection.png",
+      label: "Reflexão",
+      kind: "image",
+    },
   ],
 };
 
-export function getProjectGallery(project: Project): string[] {
-  return projectGalleries[project.id] ?? [];
+export function getProjectGallery(project: Project | string): GalleryItem[] {
+  const id = typeof project === "string" ? project : project.id;
+  return projectGalleries[id] ?? [];
+}
+
+export function getProjectCover(project: Project): string {
+  const gallery = getProjectGallery(project);
+  const image = gallery.find((item) => item.kind === "image");
+  return image?.src ?? project.image?.replace(/demo\.(mp4|webm|gif)$/i, "cover.png") ?? "";
 }

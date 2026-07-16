@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { useLenis } from "@/lib/lenisContext";
 import { getPrefersReducedMotion } from "@/lib/useReducedMotionPref";
@@ -17,8 +18,11 @@ const LINKS = [
 export function Nav() {
   const lenis = useLenis();
   const reduce = useReducedMotion();
+  const pathname = usePathname();
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("hero");
+  const onHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -28,6 +32,11 @@ export function Nav() {
   }, []);
 
   useEffect(() => {
+    if (!onHome) {
+      setActive("");
+      return;
+    }
+
     const ids = ["hero", ...LINKS.map((l) => l.id)];
     const elements = ids
       .map((id) => document.getElementById(id))
@@ -45,10 +54,16 @@ export function Nav() {
 
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [onHome]);
 
   function goTo(event: React.MouseEvent<HTMLAnchorElement>, id: string) {
     event.preventDefault();
+
+    if (!onHome) {
+      router.push(`/#${id}`);
+      return;
+    }
+
     const el = document.getElementById(id);
     if (!el) return;
 
@@ -71,7 +86,7 @@ export function Nav() {
       >
         <nav className="section-container flex items-center justify-between py-4 sm:py-5">
           <a
-            href="#hero"
+            href="/#hero"
             onClick={(event) => goTo(event, "hero")}
             className="font-serif text-lg tracking-wide text-linen-100"
             aria-label="Voltar ao início"
@@ -83,7 +98,7 @@ export function Nav() {
             {LINKS.map((link) => (
               <li key={link.id}>
                 <a
-                  href={`#${link.id}`}
+                  href={`/#${link.id}`}
                   onClick={(event) => goTo(event, link.id)}
                   className={`transition-colors duration-300 hover:text-amber-400 ${
                     active === link.id ? "text-amber-400" : ""
@@ -98,7 +113,7 @@ export function Nav() {
           <div className="hidden items-center gap-3 sm:flex">
             <SocialLinks size="sm" />
             <a
-              href="#contato"
+              href="/#contato"
               onClick={(event) => goTo(event, "contato")}
               className="rounded-full border border-moss-600/60 px-4 py-2 text-sm text-linen-200 transition-colors duration-300 hover:border-amber-400 hover:text-amber-300"
             >
@@ -108,7 +123,6 @@ export function Nav() {
         </nav>
       </header>
 
-      {/* Dock mobile — dopamina tátil + seção ativa */}
       <nav
         aria-label="Navegação mobile"
         className="fixed inset-x-0 bottom-0 z-50 border-t border-moss-700/40 bg-soil-950/90 px-3 pb-[max(0.65rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur-xl md:hidden"
@@ -119,7 +133,7 @@ export function Nav() {
             return (
               <li key={link.id} className="flex-1">
                 <motion.a
-                  href={`#${link.id}`}
+                  href={`/#${link.id}`}
                   onClick={(event) => goTo(event, link.id)}
                   whileTap={reduce ? undefined : { scale: 0.9 }}
                   className={`relative flex min-h-12 flex-col items-center justify-center rounded-2xl px-1 text-[10px] uppercase tracking-wide2 transition-colors ${
@@ -136,7 +150,9 @@ export function Nav() {
                   <span
                     aria-hidden="true"
                     className={`mb-1 h-1.5 w-1.5 rounded-full ${
-                      isActive ? "bg-amber-400 shadow-[0_0_10px_rgba(214,164,90,0.8)]" : "bg-moss-700"
+                      isActive
+                        ? "bg-amber-400 shadow-[0_0_10px_rgba(214,164,90,0.8)]"
+                        : "bg-moss-700"
                     }`}
                   />
                   {link.short}
