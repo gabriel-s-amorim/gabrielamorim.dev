@@ -1,5 +1,6 @@
 import { getPublishedProjects } from "@/lib/projects";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SectionParticles } from "@/components/visuals/SectionParticles";
 import { ProjectCard } from "./ProjectCard";
 
 export async function Projects() {
@@ -7,8 +8,9 @@ export async function Projects() {
   const sorted = [...projects].sort((a, b) => a.order - b.order);
 
   return (
-    <section id="projetos" className="relative bg-soil-900 py-28 sm:py-36">
-      <div className="section-container">
+    <section id="projetos" className="relative overflow-hidden bg-soil-900 py-28 sm:py-36">
+      <SectionParticles variant="projects" />
+      <div className="section-container relative z-10">
         <SectionHeading
           eyebrow="Projetos"
           title="Coisas que construí e mantenho"

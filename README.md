@@ -15,8 +15,9 @@ e otimizar banco de dados sob pressão de produção.
 
 ## Funcionalidades
 
-- **Site público** — hero com campo de partículas em 3D, storytelling de scroll, seções de
-  Sobre, Experiência, Projetos, Habilidades e Contato.
+- **Site público** — hero com campo de partículas em 3D, fundos generativos lazy nas seções
+  (tsParticles + blobs simplex-noise), storytelling de scroll, seções de Sobre, Experiência,
+  Projetos, Habilidades e Contato.
 - **Painel administrativo (`/admin`)** — protegido por login, permite criar, editar,
   reordenar, publicar/rascunhar e excluir projetos exibidos no site, sem precisar editar
   código ou fazer novo deploy. Inclui preview em tempo real do card antes de salvar.
@@ -81,6 +82,7 @@ flowchart TD
 | Storytelling de scroll | GSAP + ScrollTrigger | Parallax do hero, linha da timeline de experiência |
 | Smooth scroll | Lenis | Sincronizado ao ticker do GSAP para não conflitar |
 | 3D / imersivo | React Three Fiber + drei (sobre Three.js) | Campo de partículas orgânico no hero |
+| Fundos de seção | tsParticles (slim) + simplex-noise | Partículas e blobs lazy via IntersectionObserver |
 | Fontes | `next/font/google` (Fraunces + Inter) | Self-hosted, sem layout shift |
 | Banco de dados | PostgreSQL via [Neon](https://neon.tech) | Serverless-friendly, combina bem com funções da Vercel |
 | ORM | Prisma 6 (`prisma-client-js`) | Migrations versionadas, mesma ferramenta do DevLevel |
@@ -162,6 +164,37 @@ pnpm db:migrate:dev     # cria/aplica migrations em desenvolvimento
 pnpm db:seed            # roda prisma/seed.ts
 pnpm db:studio          # abre o Prisma Studio para inspecionar o banco
 ```
+
+### Captura automática de demos (Playwright)
+
+Scripts em `scripts/` abrem o Nativa Store ou o DevLevel, navegam o fluxo principal,
+salvam screenshots em alta resolução e gravam vídeo. Se `ffmpeg` estiver no PATH, também
+geram `.mp4` e um `demo.gif` otimizado (~12s).
+
+```bash
+pnpm capture:install-browsers   # 1x — baixa o Chromium do Playwright
+cp .env.capture.example .env.capture.local
+# edite URLs, pastas de saída e credenciais de teste
+# (os scripts também leem .env.capture.local automaticamente)
+
+pnpm capture:nativa-store
+pnpm capture:devlevel
+```
+
+O Playwright grava `.webm` nativamente. Com `ffmpeg` no PATH (ou `FFMPEG_PATH`),
+os scripts convertem para `.mp4` e geram `demo.gif` (~12s, loop).
+
+| Variável | Projeto | Default |
+| --- | --- | --- |
+| `NATIVA_URL` | Nativa Store | `https://nativa-store.vercel.app` |
+| `NATIVA_ADMIN_PASSWORD` | Nativa Store | (vazio — pula login admin) |
+| `NATIVA_OUT_DIR` | Nativa Store | pasta irmã `../nativa-store/nativa-store/docs/screenshots` ou `docs/screenshots/nativa-store` |
+| `DEVLEVEL_URL` | DevLevel | `https://habito-angular.vercel.app` |
+| `DEVLEVEL_EMAIL` / `DEVLEVEL_PASSWORD` | DevLevel | `demo@devlevel.app` / `demo1234` |
+| `DEVLEVEL_OUT_DIR` | DevLevel | pasta irmã `../habito-angular/docs/screenshots` ou `docs/screenshots/devlevel` |
+
+Para capturar localhost, suba o app alvo e aponte a URL correspondente
+(`http://localhost:3000`, etc.).
 
 Para gerar o build de produção (o que a Vercel roda no deploy):
 

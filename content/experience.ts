@@ -8,13 +8,11 @@ export const experience: ExperienceEntry[] = [
     period: "01/2024 — Atual",
     current: true,
     summary:
-      "Liderando o time técnico de uma plataforma que processa cerca de 80 mil pedidos por mês, com foco em performance de banco de dados e integrações críticas de pagamento e logística.",
+      "Time técnico de uma plataforma com ~80 mil pedidos/mês — performance de banco e integrações críticas.",
     bullets: [
-      "Liderei o direcionamento técnico e a gestão de qualidade de uma equipe de 2 desenvolvedores em plataforma de e-commerce.",
-      "Implementei protocolos de onboarding e documentação técnica de sistemas, reduzindo o tempo de rampa de novos integrantes de 2 meses para 2 semanas.",
-      "Arquiteturei e desenvolvi ferramentas de personalização de produtos em tempo real com JavaScript avançado (Fabric.js), reduzindo em cerca de 40% o tempo de entrega de customizações solicitadas pelos clientes.",
-      "Integrei e mantive APIs críticas de pagamento e logística (SafraPay, Magalu, Getnet, Sislogica/TMSLog), processando cerca de 80 mil pedidos por mês.",
-      "Otimizei performance e segurança em bancos de dados SQL por meio de criação e ajuste de índices, reduzindo o tempo de queries críticas em cerca de 65% (de ~900ms para ~300ms).",
+      "Onboarding e documentação: rampa de 2 meses → 2 semanas.",
+      "Personalização em tempo real (Fabric.js): ~40% menos tempo de customização.",
+      "Índices SQL: queries críticas de ~900ms → ~300ms (~65%).",
     ],
     order: 1,
   },
@@ -24,13 +22,11 @@ export const experience: ExperienceEntry[] = [
     company: "Mercado Livre",
     period: "08/2023 — 01/2024",
     current: false,
-    summary:
-      "Trabalhei em componentes de alto tráfego do fluxo de compra, unindo performance, acessibilidade e testes automatizados.",
+    summary: "Componentes de alto tráfego no fluxo de compra — performance, a11y e E2E.",
     bullets: [
-      "Refatorei componentes legados do fluxo de carrinho em React com lazy loading, reduzindo o First Contentful Paint (FCP) em 15%.",
-      "Implementei melhorias de acessibilidade (WCAG e ARIA) no painel do vendedor, garantindo navegação por teclado e compatibilidade com leitores de tela.",
-      "Otimizei o fluxo de checkout consumindo APIs internas para validação rápida de pagamentos.",
-      "Desenvolvi dashboards internos em Node.js e React para monitoramento de logs de erro e estruturei testes E2E com Cypress no fluxo principal de busca e compras.",
+      "Lazy loading no carrinho: FCP −15%.",
+      "Acessibilidade (WCAG/ARIA) no painel do vendedor.",
+      "Dashboards internos + testes E2E com Cypress.",
     ],
     order: 2,
   },
@@ -40,12 +36,8 @@ export const experience: ExperienceEntry[] = [
     company: "Instituto Fernand Braudel de Economia Mundial",
     period: "06/2021 — 12/2021",
     current: false,
-    summary:
-      "Meu primeiro contato profissional com desenvolvimento: manutenção de um site institucional com foco em estabilidade.",
-    bullets: [
-      "Desenvolvi e mantive o site institucional, entregando novos recursos com foco em estabilidade.",
-      "Executei testes e corrigi bugs em colaboração com a equipe interna.",
-    ],
+    summary: "Primeiro contato profissional: site institucional com foco em estabilidade.",
+    bullets: ["Manutenção do site e correção de bugs com a equipe interna."],
     order: 3,
   },
 ];

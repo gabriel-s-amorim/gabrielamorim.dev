@@ -1,10 +1,37 @@
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SectionParticles } from "@/components/visuals/SectionParticles";
+import { NoiseBlob } from "@/components/visuals/NoiseBlob";
+
+const callouts = [
+  {
+    label: "Em produção",
+    body: "Há dois anos lidero o time técnico de um e-commerce que não para. Liderança, pra mim, é criar processos que sobrevivem à minha ausência.",
+  },
+  {
+    label: "Fora do código",
+    body: "Natureza, silêncio, meditação. Mesmo princípio de um índice bem colocado: reduzir ruído, isolar o que importa.",
+  },
+] as const;
 
 export function About() {
   return (
-    <section id="sobre" className="relative bg-soil-900 py-28 sm:py-36">
-      <div className="section-container grid gap-14 lg:grid-cols-[0.9fr_1.4fr] lg:gap-20">
+    <section id="sobre" className="relative overflow-hidden bg-soil-900 py-28 sm:py-36">
+      <SectionParticles variant="about" />
+      <NoiseBlob
+        className="-right-24 top-10 h-[22rem] w-[22rem] opacity-80 sm:right-0 sm:h-[28rem] sm:w-[28rem]"
+        color="rgba(214, 164, 90, 0.12)"
+        scale={0.5}
+        speed={0.14}
+      />
+      <NoiseBlob
+        className="-left-32 bottom-0 h-[18rem] w-[18rem] opacity-70 sm:h-[24rem] sm:w-[24rem]"
+        color="rgba(92, 125, 95, 0.14)"
+        scale={0.65}
+        speed={0.1}
+      />
+
+      <div className="section-container relative z-10 grid gap-14 lg:grid-cols-[0.85fr_1.35fr] lg:gap-16">
         <div>
           <SectionHeading eyebrow="Sobre" title="Raiz antes de altura" />
           <Reveal delay={0.1}>
@@ -29,38 +56,20 @@ export function About() {
           </Reveal>
         </div>
 
-        <div className="space-y-6 text-lg leading-relaxed text-sage-300 sm:text-xl">
-          <Reveal>
-            <p>
-              Há pouco mais de dois anos comecei a liderar uma equipe pequena dentro de uma
-              operação de e-commerce que nunca para: pedidos entrando o dia inteiro, integrações
-              de pagamento e logística que não podem falhar, banco de dados que precisa responder
-              rápido mesmo sob pressão. Aprendi, na prática, que liderança técnica não é sobre ter
-              todas as respostas — é sobre criar processos que sobrevivem à minha ausência:
-              documentação que se lê de fato, onboarding que não depende de decorar segredos,
-              decisões de arquitetura que qualquer pessoa da equipe consiga continuar.
-            </p>
-          </Reveal>
+        <div className="space-y-5">
+          {callouts.map((item, index) => (
+            <Reveal key={item.label} delay={index * 0.1}>
+              <article className="border-l border-amber-400/40 pl-5 sm:pl-6">
+                <p className="text-xs uppercase tracking-wide2 text-moss-400">{item.label}</p>
+                <p className="mt-2 text-lg leading-snug text-sage-300 sm:text-xl">{item.body}</p>
+              </article>
+            </Reveal>
+          ))}
 
-          <Reveal delay={0.12}>
-            <p>
-              Fora do código, minha rotina tem outro ritmo. Sou da natureza — literalmente: gosto
-              de lugares onde o silêncio tem peso, e a meditação entrou na minha vida como uma
-              ferramenta tão prática quanto qualquer índice de banco de dados bem colocado: reduz
-              ruído, isola o que importa, deixa o sistema responder mais rápido ao que realmente
-              precisa de atenção. Tenho também um lado mais espiritual, que raramente cabe numa
-              reunião de trabalho, mas que sustenta como encaro problemas difíceis: com paciência,
-              com a crença de que tudo tem seu tempo de maturação — inclusive um sistema em
-              produção.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.24}>
-            <p>
-              Entre otimizar uma query que caiu de 900ms para 300ms e sentar em silêncio
-              observando uma árvore, encontrei o mesmo princípio: raiz antes de altura. Resolver a
-              causa, não o sintoma. Construir por camadas, com paciência, sem pressa de aparência.
-            </p>
+          <Reveal delay={0.22}>
+            <blockquote className="mt-2 max-w-xl font-serif text-2xl leading-snug text-linen-100 sm:text-3xl">
+              Resolver a causa, não o sintoma. Construir por camadas — sem pressa de aparência.
+            </blockquote>
           </Reveal>
         </div>
       </div>
