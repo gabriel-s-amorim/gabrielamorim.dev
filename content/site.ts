@@ -10,6 +10,6 @@ export const site: SiteContent = {
   email: "ghaamorim338@gmail.com",
   links: {
     github: "https://github.com/gabriel-s-amorim",
-    linkedin: "https://www.linkedin.com/in/gabriel-henrique-494120202",
+    linkedin: "https://www.linkedin.com/in/gabriel-henrique-santos-amorim-494120202",
   },
 };

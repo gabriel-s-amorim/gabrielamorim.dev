@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { skills, languages } from "@/content/skills";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
+import { TechIcon } from "@/components/ui/TechIcon";
 import { useReducedMotionPref } from "@/lib/useReducedMotionPref";
 
 export function Skills() {
@@ -27,12 +28,14 @@ export function Skills() {
                 <h3 className="font-serif text-xl text-linen-100">{group.title}</h3>
                 <div className="mt-5 flex flex-wrap gap-2.5">
                   {group.items.map((item) => (
-                    <span
+                    <motion.span
                       key={item}
-                      className="inline-flex items-center rounded-full border border-moss-600/40 px-3.5 py-1.5 text-sm text-sage-300 transition-colors duration-300 hover:border-amber-400/60 hover:text-amber-300"
+                      whileTap={prefersReduced ? undefined : { scale: 0.94 }}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-moss-600/40 px-3.5 py-1.5 text-sm text-sage-300 transition-colors duration-300 hover:border-amber-400/60 hover:text-amber-300 active:border-amber-400"
                     >
+                      <TechIcon name={item} className="h-3.5 w-3.5 text-amber-400/90" />
                       {item}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
               </div>

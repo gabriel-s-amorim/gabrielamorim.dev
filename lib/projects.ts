@@ -10,7 +10,7 @@ import type { Project } from "@/types/content";
  */
 export function toPublicProject(project: PrismaProject): Project {
   return {
-    id: project.id,
+    id: project.slug,
     title: project.title,
     tagline: project.tagline,
     description: project.description,

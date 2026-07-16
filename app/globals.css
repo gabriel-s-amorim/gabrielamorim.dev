@@ -70,6 +70,27 @@ body {
   text-wrap: balance;
 }
 
+.projects-rail {
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-inline: 1.5rem;
+  scrollbar-width: none;
+}
+
+.projects-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.tap-pop {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+@media (max-width: 767px) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
 /* Respect reduced motion at the CSS layer as a baseline safety net,
    even before JS-driven animations check the preference. */
 @media (prefers-reduced-motion: reduce) {
