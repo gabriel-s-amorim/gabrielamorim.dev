@@ -184,6 +184,10 @@ pnpm capture:devlevel
 O Playwright grava `.webm` nativamente. Com `ffmpeg` no PATH (ou `FFMPEG_PATH`),
 os scripts convertem para `.mp4` e geram `demo.gif` (~12s, loop).
 
+Além de `docs/screenshots/` nos projetos irmãos, os scripts também copiam
+`cover.png`, `demo.mp4` e `demo.gif` para `public/projects/<slug>/` — é isso que
+os cards da seção Projetos do portfólio exibem.
+
 | Variável | Projeto | Default |
 | --- | --- | --- |
 | `NATIVA_URL` | Nativa Store | `https://nativa-store.vercel.app` |

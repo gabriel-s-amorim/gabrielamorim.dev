@@ -1,4 +1,4 @@
-import { mkdir, readdir, rename, unlink, readFile } from "node:fs/promises";
+import { mkdir, readdir, rename, unlink, readFile, copyFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
@@ -189,4 +189,38 @@ async function hasFfmpeg(): Promise<string | null> {
 export async function settle(page: Page, ms = 800) {
   await page.waitForLoadState("networkidle").catch(() => undefined);
   await page.waitForTimeout(ms);
+}
+
+/**
+ * Copia mídia gerada para `public/projects/<slug>/` do portfólio,
+ * para aparecer nos cards do site.
+ */
+export async function syncToPortfolioPublic(options: {
+  slug: string;
+  coverSource: string;
+  mp4Source?: string;
+  gifSource?: string;
+  portfolioRoot?: string;
+}) {
+  const root = options.portfolioRoot ?? process.cwd();
+  const destDir = path.join(root, "public", "projects", options.slug);
+  await ensureDir(destDir);
+
+  if (existsSync(options.coverSource)) {
+    const dest = path.join(destDir, "cover.png");
+    await copyFile(options.coverSource, dest);
+    console.log(`  ✓ site cover → ${dest}`);
+  }
+
+  if (options.mp4Source && existsSync(options.mp4Source)) {
+    const dest = path.join(destDir, "demo.mp4");
+    await copyFile(options.mp4Source, dest);
+    console.log(`  ✓ site video → ${dest}`);
+  }
+
+  if (options.gifSource && existsSync(options.gifSource)) {
+    const dest = path.join(destDir, "demo.gif");
+    await copyFile(options.gifSource, dest);
+    console.log(`  ✓ site gif → ${dest}`);
+  }
 }

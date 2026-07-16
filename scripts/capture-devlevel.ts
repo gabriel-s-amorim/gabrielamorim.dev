@@ -18,6 +18,7 @@ import {
   settle,
   shot,
   startCapture,
+  syncToPortfolioPublic,
 } from "./capture/shared";
 
 const ROOT = process.cwd();
@@ -116,7 +117,13 @@ async function main() {
     return;
   }
 
-  await finishCapture(ctx, "devlevel-demo");
+  const media = await finishCapture(ctx, "devlevel-demo");
+  await syncToPortfolioPublic({
+    slug: "devlevel",
+    coverSource: path.join(outDir, "03-dashboard.png"),
+    mp4Source: media.mp4,
+    gifSource: media.gif,
+  });
   console.log("\n✔ Captura DevLevel concluída.\n");
 }
 

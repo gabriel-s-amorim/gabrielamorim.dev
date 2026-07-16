@@ -17,6 +17,7 @@ import {
   settle,
   shot,
   startCapture,
+  syncToPortfolioPublic,
 } from "./capture/shared";
 
 const ROOT = process.cwd();
@@ -116,7 +117,13 @@ async function main() {
     return;
   }
 
-  await finishCapture(ctx, "nativa-store-demo");
+  const media = await finishCapture(ctx, "nativa-store-demo");
+  await syncToPortfolioPublic({
+    slug: "nativa-store",
+    coverSource: path.join(outDir, "01-home.png"),
+    mp4Source: media.mp4,
+    gifSource: media.gif,
+  });
   console.log("\n✔ Captura Nativa Store concluída.\n");
 }
 
