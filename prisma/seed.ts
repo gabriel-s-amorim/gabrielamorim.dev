@@ -44,6 +44,14 @@ async function main() {
     console.log(`  ✓ ${project.title}`);
   }
 
+  // Remove placeholder legado quando o PR Assistant (ou outro projeto) ocupa o slot
+  const removed = await db.project.deleteMany({
+    where: { slug: "projeto-em-construcao" },
+  });
+  if (removed.count > 0) {
+    console.log("  ✓ Removido placeholder: projeto-em-construcao");
+  }
+
   const adminEmail = process.env.ADMIN_EMAIL;
   const adminPassword = process.env.ADMIN_PASSWORD;
 

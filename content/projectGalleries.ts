@@ -11,6 +11,38 @@ export type GalleryItem = {
  * Arquivos em public/projects/<slug>/.
  */
 export const projectGalleries: Record<string, GalleryItem[]> = {
+  "pr-assistant": [
+    {
+      src: "/projects/pr-assistant/demo.mp4",
+      label: "Demo",
+      kind: "video",
+    },
+    {
+      src: "/projects/pr-assistant/gallery/01-hero.png",
+      label: "Landing",
+      kind: "image",
+    },
+    {
+      src: "/projects/pr-assistant/gallery/02-fluxo.png",
+      label: "Fluxo",
+      kind: "image",
+    },
+    {
+      src: "/projects/pr-assistant/gallery/03-evidencia.png",
+      label: "Evidência",
+      kind: "image",
+    },
+    {
+      src: "/projects/pr-assistant/gallery/06-bot-review.png",
+      label: "Review do bot",
+      kind: "image",
+    },
+    {
+      src: "/projects/pr-assistant/gallery/05-produto.png",
+      label: "Produto",
+      kind: "image",
+    },
+  ],
   "nativa-store": [
     {
       src: "/projects/nativa-store/demo.mp4",
