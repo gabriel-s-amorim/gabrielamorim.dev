@@ -35,7 +35,7 @@ export const projects: Project[] = [
       github: "https://github.com/gabriel-s-amorim/nativa-store",
       demo: "https://nativa-store.vercel.app",
     },
-    // Vídeo/GIF gerados por `pnpm capture:nativa-store` → public/projects/nativa-store/
+    // Demo curta (cards) + walkthrough YouTube na página do projeto
     image: "/projects/nativa-store/demo.mp4",
     status: "live",
     order: 2,

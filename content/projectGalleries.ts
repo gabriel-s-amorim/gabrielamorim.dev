@@ -6,6 +6,19 @@ export type GalleryItem = {
   kind: "image" | "video";
 };
 
+export type ProjectShowcase = {
+  youtubeId: string;
+  durationLabel: string;
+};
+
+/** Walkthroughs longos — embed YouTube (não listado) na página do projeto. */
+export const projectShowcases: Record<string, ProjectShowcase> = {
+  "nativa-store": {
+    youtubeId: "cuGsURw7ni0",
+    durationLabel: "15 min",
+  },
+};
+
 /**
  * Galerias por slug — cards + página do projeto.
  * Arquivos em public/projects/<slug>/.
@@ -112,6 +125,11 @@ export const projectGalleries: Record<string, GalleryItem[]> = {
 export function getProjectGallery(project: Project | string): GalleryItem[] {
   const id = typeof project === "string" ? project : project.id;
   return projectGalleries[id] ?? [];
+}
+
+export function getProjectShowcase(project: Project | string): ProjectShowcase | undefined {
+  const id = typeof project === "string" ? project : project.id;
+  return projectShowcases[id];
 }
 
 export function getProjectCover(project: Project): string {
